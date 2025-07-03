@@ -1,4 +1,4 @@
-name: Ansible files and Deployment
+name: Ansible Linter
 
 on:
   push:
