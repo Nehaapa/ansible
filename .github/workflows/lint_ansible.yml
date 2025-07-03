@@ -15,10 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run ansible-lint
-        ansible-lint:
-          uses: ansible/ansible-lint@main
-        with:
-          args: ""
-          setup_python: "true"
-          working_directory: ""
-          requirements_file: ""
+        uses: ansible/ansible-lint@main
+        # with:
+        #   args: ""
+        #   setup_python: "true"
+        #   working_directory: ""
+        #   requirements_file: ""
