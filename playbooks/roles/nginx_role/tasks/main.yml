@@ -1,0 +1,36 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for nginx_role
+
+- name: Update and upgrade apt
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: yes
+
+- name: "Install nginx to latest version"
+  apt:
+    name: nginx
+    state: latest
+
+- name: Copy the nginx configuration file to the target host
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: Create Sym link to the new config to enable it
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    src: /etc/nginx/sites-available/default
+    state: link
+
+- name: Create nginx directory
+  file:
+    path: "{{ nginx_custom_directory }}"
+    state: directory
+
+- name: Copy index.html to the nginx directory
+  copy:
+    src: files/index.html
+    dest: "{{ nginx_custom_directory }}/index.html"
+  notify: Restart the nginx service
